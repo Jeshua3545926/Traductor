@@ -1,0 +1,78 @@
+{
+  "name": "traductor-vscode",
+  "displayName": "Traductor VS Code",
+  "description": "Extensión para traducir texto y variables en VS Code con soporte para múltiples idiomas",
+  "version": "0.0.1",
+  "publisher": "Jeshua",
+  "author": "Jeshua",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Jeshua/traductor-vscode.git"
+  },
+  "homepage": "https://github.com/Jeshua/traductor-vscode",
+  "bugs": {
+    "url": "https://github.com/Jeshua/traductor-vscode/issues"
+  },
+  "keywords": [
+    "traductor",
+    "translator",
+    "spanish",
+    "english",
+    "variables",
+    "camelcase"
+  ],
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Other",
+    "Formatters"
+  ],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "traductor.translateText",
+        "title": "Traducir Texto"
+      },
+      {
+        "command": "traductor.translateVariable",
+        "title": "Traducir Variable"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "traductorContainer",
+          "title": "Traductor",
+          "icon": "$(globe)"
+        }
+      ]
+    },
+    "views": {
+      "traductorContainer": [
+        {
+          "id": "traductorView",
+          "name": "Traductor",
+          "type": "webview",
+          "when": "true"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/node": "^18.19.119",
+    "@types/vscode": "^1.74.0",
+    "typescript": "^4.9.4"
+  },
+  "dependencies": {
+    "axios": "^1.10.0"
+  }
+}

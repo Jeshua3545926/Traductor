@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traductor</title>
+    <link rel="stylesheet" href="{{cssUri}}">
+</head>
+<body>
+    <div class="section">
+        <h3>🌐 Traductor de Texto</h3>
+        
+        <div class="language-selector">
+            <select id="fromLang">
+                <option value="es">Español</option>
+                <option value="en">English</option>
+                <option value="fr">Français</option>
+                <option value="de">Deutsch</option>
+                <option value="it">Italiano</option>
+                <option value="pt">Português</option>
+                <option value="ru">Русский</option>
+                <option value="ja">日本語</option>
+                <option value="ko">한국어</option>
+                <option value="zh">中文</option>
+            </select>
+            <button class="swap-btn" id="swapLangs" title="Intercambiar idiomas">⇄</button>
+            <select id="toLang">
+                <option value="en">English</option>
+                <option value="es">Español</option>
+                <option value="fr">Français</option>
+                <option value="de">Deutsch</option>
+                <option value="it">Italiano</option>
+                <option value="pt">Português</option>
+                <option value="ru">Русский</option>
+                <option value="ja">日本語</option>
+                <option value="ko">한국어</option>
+                <option value="zh">中文</option>
+            </select>
+        </div>
+        
+        <textarea id="inputText" placeholder="Escribe el texto que quieres traducir..."></textarea>
+        
+        <button id="translateBtn">Traducir</button>
+        <button class="secondary" id="clearBtn">Limpiar</button>
+        
+        <div id="translationResult" class="result hidden"></div>
+        
+        <div id="textActions" class="action-buttons hidden">
+            <button class="secondary" id="copyResult">📋 Copiar</button>
+            <button class="secondary" id="insertResult">📝 Insertar</button>
+            <button class="secondary" id="replaceResult">🔄 Reemplazar</button>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h3>🔤 Traductor de Variables</h3>
+        <p class="info-text">Selecciona una variable en el editor y haz clic en el botón para traducirla a camelCase en inglés.</p>
+        
+        <button id="translateVarBtn">Traducir Variable Seleccionada</button>
+    </div>
+
+    <script src="{{scriptUri}}"></script>
+</body>
+</html>

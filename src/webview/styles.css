@@ -1,0 +1,125 @@
+body {
+    font-family: var(--vscode-font-family);
+    font-size: var(--vscode-font-size);
+    color: var(--vscode-foreground);
+    background-color: var(--vscode-editor-background);
+    padding: 15px;
+    margin: 0;
+}
+
+.section {
+    margin-bottom: 25px;
+    padding: 15px;
+    border: 1px solid var(--vscode-panel-border);
+    border-radius: 6px;
+    background-color: var(--vscode-editor-background);
+}
+
+.section h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: var(--vscode-titleBar-activeForeground);
+    font-size: 16px;
+}
+
+.language-selector {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 15px;
+    align-items: center;
+}
+
+select, textarea, input {
+    background-color: var(--vscode-input-background);
+    color: var(--vscode-input-foreground);
+    border: 1px solid var(--vscode-input-border);
+    border-radius: 3px;
+    padding: 6px 8px;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+select {
+    flex: 1;
+    min-width: 80px;
+}
+
+textarea {
+    width: 100%;
+    min-height: 80px;
+    resize: vertical;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+input {
+    width: 100%;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: var(--vscode-button-background);
+    color: var(--vscode-button-foreground);
+    border: 1px solid var(--vscode-button-border);
+    border-radius: 3px;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: inherit;
+    margin-right: 8px;
+    margin-bottom: 8px;
+}
+
+button:hover {
+    background-color: var(--vscode-button-hoverBackground);
+}
+
+button.secondary {
+    background-color: var(--vscode-button-secondaryBackground);
+    color: var(--vscode-button-secondaryForeground);
+}
+
+button.secondary:hover {
+    background-color: var(--vscode-button-secondaryHoverBackground);
+}
+
+.swap-btn {
+    min-width: 40px;
+    padding: 6px;
+    font-size: 14px;
+}
+
+.result {
+    background-color: var(--vscode-textBlockQuote-background);
+    border: 1px solid var(--vscode-textBlockQuote-border);
+    border-radius: 3px;
+    padding: 10px;
+    margin: 10px 0;
+    min-height: 40px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.action-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 10px;
+}
+
+.hidden {
+    display: none;
+}
+
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.info-text {
+    color: var(--vscode-descriptionForeground);
+    font-size: 0.9em;
+    margin-bottom: 15px;
+    line-height: 1.4;
+}
