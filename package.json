@@ -2,7 +2,11 @@
   "name": "traductor-vscode",
   "displayName": "Traductor VS Code",
   "description": "Extensión para traducir texto y variables en VS Code con soporte para múltiples idiomas",
-  "version": "0.0.1",
+  "version": "1.0.1",
+  "galleryBanner": {
+    "color": "#C80000",
+    "theme": "dark"
+  },
   "publisher": "Jeshua",
   "author": "Jeshua",
   "license": "MIT",
@@ -12,7 +16,7 @@
   },
   "homepage": "https://github.com/Jeshua3545926",
   "bugs": {
-    "url": "https://github.com/Jeshua3545926"
+    "url": "https://github.com/Jeshua3545926/Traductor/issues"
   },
   "keywords": [
     "traductor",
@@ -29,19 +33,37 @@
     "Other",
     "Formatters"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "*"
+  ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
         "command": "traductor.translateText",
-        "title": "Traducir Texto"
+        "title": "Traductor: Traducir Texto Seleccionado",
+        "category": "Traductor"
       },
       {
         "command": "traductor.translateVariable",
-        "title": "Traducir Variable"
+        "title": "Traductor: Traducir Variable a CamelCase",
+        "category": "Traductor"
       }
     ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "traductor.translateText",
+          "when": "editorHasSelection",
+          "group": "traductor"
+        },
+        {
+          "command": "traductor.translateVariable",
+          "when": "editorHasSelection",
+          "group": "traductor"
+        }
+      ]
+    },
     "viewsContainers": {
       "activitybar": [
         {
@@ -70,6 +92,7 @@
   "devDependencies": {
     "@types/node": "^18.19.119",
     "@types/vscode": "^1.74.0",
+    "@vscode/vsce": "^3.6.0",
     "typescript": "^4.9.4"
   },
   "dependencies": {
