@@ -1,10 +1,68 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Traductor</title>
-    <link rel="stylesheet" href="{{cssUri}}">
+    <style>
+        body {
+            font-family: var(--vscode-font-family);
+            color: var(--vscode-foreground);
+            background-color: var(--vscode-editor-background);
+            padding: 15px;
+            margin: 0;
+        }
+        .section {
+            margin-bottom: 20px;
+            padding: 15px;
+            
+            border-radius: 6px;
+        }
+        .section h3 {
+            margin-top: 0;
+            color: var(--vscode-titleBar-activeForeground);
+        }
+        .language-selector {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 15px;
+            align-items: center;
+        }
+        select, textarea, button {
+            background-color: var(--vscode-input-background);
+            color: var(--vscode-input-foreground);
+            border: 1px solid var(--vscode-input-border);
+            border-radius: 3px;
+            padding: 6px 8px;
+            font-family: inherit;
+        }
+        select { flex: 1; }
+        textarea {
+            width: 100%;
+            min-height: 80px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: var(--vscode-button-background);
+            color: var(--vscode-button-foreground);
+            cursor: pointer;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+        button:hover {
+            background-color: var(--vscode-button-hoverBackground);
+        }
+        .result {
+            background-color: var(--vscode-textBlockQuote-background);
+            border: 1px solid var(--vscode-textBlockQuote-border);
+            border-radius: 3px;
+            padding: 10px;
+            margin: 10px 0;
+            min-height: 40px;
+        }
+        .hidden { display: none; }
+    </style>
 </head>
 <body>
     <div class="section">
@@ -15,50 +73,82 @@
                 <option value="es">Español</option>
                 <option value="en">English</option>
                 <option value="fr">Français</option>
-                <option value="de">Deutsch</option>
-                <option value="it">Italiano</option>
-                <option value="pt">Português</option>
-                <option value="ru">Русский</option>
-                <option value="ja">日本語</option>
-                <option value="ko">한국어</option>
-                <option value="zh">中文</option>
             </select>
-            <button class="swap-btn" id="swapLangs" title="Intercambiar idiomas">⇄</button>
+            <button onclick="swapLanguages()">⇄</button>
             <select id="toLang">
                 <option value="en">English</option>
                 <option value="es">Español</option>
                 <option value="fr">Français</option>
-                <option value="de">Deutsch</option>
-                <option value="it">Italiano</option>
-                <option value="pt">Português</option>
-                <option value="ru">Русский</option>
-                <option value="ja">日本語</option>
-                <option value="ko">한국어</option>
-                <option value="zh">中文</option>
             </select>
         </div>
         
         <textarea id="inputText" placeholder="Escribe el texto que quieres traducir..."></textarea>
         
-        <button id="translateBtn">Traducir</button>
-        <button class="secondary" id="clearBtn">Limpiar</button>
+        <button onclick="translateText()">Traducir</button>
+        <button onclick="clearText()">Limpiar</button>
         
-        <div id="translationResult" class="result hidden"></div>
-        
-        <div id="textActions" class="action-buttons hidden">
-            <button class="secondary" id="copyResult">📋 Copiar</button>
-            <button class="secondary" id="insertResult">📝 Insertar</button>
-            <button class="secondary" id="replaceResult">🔄 Reemplazar</button>
-        </div>
+        <div id="result" class="result hidden">Resultado aparecerá aquí...</div>
     </div>
     
     <div class="section">
         <h3>🔤 Traductor de Variables</h3>
-        <p class="info-text">Selecciona una variable en el editor y haz clic en el botón para traducirla a camelCase en inglés.</p>
+        <p>Selecciona una variable en el editor y haz clic en el botón.</p>
         
-        <button id="translateVarBtn">Traducir Variable Seleccionada</button>
+        <button onclick="translateVariable()">Traducir Variable Seleccionada</button>
     </div>
 
-    <script src="{{scriptUri}}"></script>
+    <script>
+        const vscode = acquireVsCodeApi();
+        
+        function translateText() {
+            const text = document.getElementById('inputText').value.trim();
+            if (!text) return;
+            
+            const fromLang = document.getElementById('fromLang').value;
+            const toLang = document.getElementById('toLang').value;
+            
+            document.getElementById('result').textContent = 'Traduciendo...';
+            document.getElementById('result').classList.remove('hidden');
+            
+            vscode.postMessage({
+                command: 'translateText',
+                text: text,
+                fromLang: fromLang,
+                toLang: toLang
+            });
+        }
+        
+        function clearText() {
+            document.getElementById('inputText').value = '';
+            document.getElementById('result').classList.add('hidden');
+        }
+        
+        function swapLanguages() {
+            const fromLang = document.getElementById('fromLang');
+            const toLang = document.getElementById('toLang');
+            const temp = fromLang.value;
+            fromLang.value = toLang.value;
+            toLang.value = temp;
+        }
+        
+        function translateVariable() {
+            vscode.postMessage({
+                command: 'translateVariable'
+            });
+        }
+        
+        window.addEventListener('message', event => {
+            const message = event.data;
+            
+            switch (message.command) {
+                case 'translationResult':
+                    document.getElementById('result').textContent = message.result;
+                    break;
+                case 'translationError':
+                    document.getElementById('result').textContent = 'Error: ' + message.error;
+                    break;
+            }
+        });
+    </script>
 </body>
 </html>
