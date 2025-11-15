@@ -2,7 +2,7 @@
   "name": "traductor-vscode",
   "displayName": "Traductor VS Code",
   "description": "Extensión para traducir texto y variables en VS Code con soporte para múltiples idiomas",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "galleryBanner": {
     "color": "#C80000",
     "theme": "dark"

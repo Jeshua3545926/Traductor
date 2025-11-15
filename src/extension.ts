@@ -130,33 +130,33 @@ function esEspanol(word: string): boolean {
 /* ============================================================
    =============== MODO PROC: reemplazar palabra =============
    ============================================================ */
-
-async function procesarUltimaPalabra(document: vscode.TextDocument, position: vscode.Position) {
+async function procesarLineaCompleta(document: vscode.TextDocument, position: vscode.Position) {
     const editor = vscode.window.activeTextEditor;
     if (!editor) return;
 
-    const line = document.lineAt(position.line).text;
+    const lineText = document.lineAt(position.line).text.trim();
+    if (!lineText) return;
 
-    const words = line.trim().split(/\s+/);
-    const lastWord = words[words.length - 1];
+    // Detectar español mínimo
+    const contieneEspañol =
+        /[áéíóúñ]/i.test(lineText) ||
+        /\b(el|la|los|las|para|de|que|es|un|una)\b/i.test(lineText);
 
-    if (!lastWord) return;
+    if (!contieneEspañol) return;
 
-    if (!esEspanol(lastWord)) return;
+    // ⬅⬅ TRADUCCIÓN COMPLETA — mantiene espacios
+    const traducido = await translateText(lineText, "es", "en");
 
-    const traducido = await translateText(lastWord, 'es', 'en');
-    const camelCase = toCamelCase(traducido);
+    // Reemplazar la línea tal cual, sin camelCase
+    const start = new vscode.Position(position.line, 0);
+    const end = new vscode.Position(position.line, lineText.length);
 
-    const indice = line.lastIndexOf(lastWord);
-    if (indice === -1) return;
-
-    const start = new vscode.Position(position.line, indice);
-    const end = new vscode.Position(position.line, indice + lastWord.length);
-
-    editor.edit(edit => {
-        edit.replace(new vscode.Range(start, end), camelCase);
+    await editor.edit(edit => {
+        edit.replace(new vscode.Range(start, end), traducido);
     });
 }
+
+
 
 
 
@@ -220,17 +220,28 @@ export function activate(context: vscode.ExtensionContext) {
        ============================================================ */
 
     vscode.workspace.onDidChangeTextDocument(async (event) => {
+        const editor = vscode.window.activeTextEditor;
+        if (!editor) return;
+
         const changes = event.contentChanges;
+        if (changes.length === 0) return;
 
-        for (const change of changes) {
-            const text = change.text;
+        const change = changes[0];
 
-            // Solo activa PROC cuando el usuario presiona espacio
-            if (text === " ") {
-                procesarUltimaPalabra(event.document, change.range.start);
-            }
+        // Detectar si se insertó un salto de línea
+        const saltoDetectado = change.text.includes("\n");
+
+        if (!saltoDetectado) {
+            return; // no presionó ENTER
         }
+
+        // Procesar la palabra/frase antes del salto de línea
+        const position = change.range.start;
+        const document = event.document;
+
+        procesarLineaCompleta(document, position);
     });
+
 }
 
 export function deactivate() { }
