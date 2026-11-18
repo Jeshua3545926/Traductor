@@ -1,10 +1,10 @@
-# Traductor de Vscode ✨
+# Traductor de Vscode 
 
 ## Características
 
-- Soporte para múltiples idiomas que hacen tu código más accesible 🌍
-- Interfaz intuitiva que se integra perfectamente con tu flujo de trabajo 💻
-- Actualizaciones regulares con nuevas funcionalidades 🚀
+- Soporte para múltiples idiomas que hacen tu código más accesible 
+- Interfaz intuitiva que se integra perfectamente con tu flujo de trabajo 
+- Actualizaciones regulares con nuevas funcionalidades 
 ## Instalación
 1. Abre VS Code
 2. Ve a la pestaña de extensiones (Ctrl+Shift+X)
