@@ -30,7 +30,6 @@
 ## Soporte
 Si encuentras algún problema o tienes sugerencias, por favor:
 - Abre un issue en nuestro [repositorio de GitHub](https://github.com/usuario/traductor-vscode)
-- Envía un correo a soporte@traductordevscode.com
 
 ## Licencia
 Este proyecto está licenciado bajo la Licencia MIT - ver el archivo LICENSE para más detalles.
